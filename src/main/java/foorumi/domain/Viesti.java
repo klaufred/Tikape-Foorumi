@@ -11,11 +11,11 @@ public class Viesti {
     private int aihe_id;
     private Date aika;
     
-    public Viesti(int id, String txt, String lahettaja, int aihe_id, Date aika) {
+    public Viesti(int id, String teksti, String lahettaja, int aihe_id, Date aika) {
         this.aihe_id = aihe_id;
         this.id = id;
         this.lahettaja = lahettaja;
-        this.teksti = txt;
+        this.teksti = teksti;
         this.aika = aika;
     }
     
