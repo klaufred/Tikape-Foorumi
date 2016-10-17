@@ -1,0 +1,18 @@
+INSERT INTO Alue VALUES (1, "Tietokoneet!");
+INSERT INTO Alue VALUES (2, "Java");
+INSERT INTO Alue VALUES (3, "Tikape");
+
+INSERT INTO Aihe VALUES (1, 1, "Kaikki koneet on mahtavia!");
+INSERT INTO Aihe VALUES (2, 1, "Tietokone ongelmia");
+INSERT INTO Aihe VALUES (3, 2, "Kaikki rakastaa javaa!");
+INSERT INTO Aihe VALUES (4, 2, "Kaikki vihaa javaa!");
+INSERT INTO Aihe VALUES (5, 3, "Hyvä alku!");
+
+INSERT INTO Viesti VALUES (1, 1, "Onko??", "Uuno" "15.10.2016");
+INSERT INTO Viesti VALUES (2, 1, "No tietenkin!", "PlayerOne", "15.10.2016");
+INSERT INTO Viesti VALUES (3, 3, "onko näin?", "TheSpaceMan", "15.10.2016");
+INSERT INTO Viesti VALUES (4, 2, "Mikään ei toimi!", "TheSpaceMan", "15.10.2016");
+INSERT INTO Viesti VALUES (5, 4, "En mä nyt tiedä", "Uuno", "15.10.2016");
+INSERT INTO Viesti VALUES (6, 5, "En mä nyt tiedä", "TheSpaceMan", "15.10.2016");
+
+

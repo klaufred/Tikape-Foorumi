@@ -1,0 +1,22 @@
+CREATE TABLE Alue (
+	id int PRIMARY KEY NOT NULL,
+	nimi varchar(40) NOT NULL,
+);
+
+CREATE TABLE Aihe (
+	id int PRIMARY KEY NOT NULL,
+	alue int NOT NULL,
+	teksti varchar(100) NOT NULL,
+	FOREIGN KEY(alue) REFERENCES Alue(alue_id),
+)
+
+CREATE TABLE VIESTI (
+	int id NOT NULL,
+	aihe int NOT NULL,
+	teksti varchar(100) NOT NULL,
+	lähettäjä varchar(20) NOT NULL,
+	aika date NOT NULL,
+	FOREIGN KEY(aihe) REFERENCES Aihe(id),
+)
+
+
