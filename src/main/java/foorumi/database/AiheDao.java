@@ -1,4 +1,3 @@
-
 package foorumi.database;
 
 import foorumi.domain.Aihe;
@@ -7,12 +6,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
+public class AiheDao implements Dao<Aihe, Integer> {
 
-public class AiheDao implements Dao<Aihe, Integer>{
     Database database;
-    
+
     public AiheDao(Database base) {
         this.database = base;
     }
@@ -24,7 +24,7 @@ public class AiheDao implements Dao<Aihe, Integer>{
         stmt.setObject(1, key);
 
         ResultSet rs = stmt.executeQuery();
-        
+
         if (!rs.next()) {
             rs.close();
             stmt.close();
@@ -34,7 +34,6 @@ public class AiheDao implements Dao<Aihe, Integer>{
         Integer id = rs.getInt("id");
         String teksti = rs.getString("teksti");
         Integer alueId = rs.getInt("alue_id");
-        
 
         Aihe aihe = new Aihe(id, teksti, alueId);
 
@@ -47,12 +46,43 @@ public class AiheDao implements Dao<Aihe, Integer>{
 
     @Override
     public List<Aihe> etsiKaikki() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection conn = database.getConnection();
+        Statement stmt = conn.createStatement();
+        ResultSet result = stmt.executeQuery("SELECT * FROM Aihe");
+
+        List<Aihe> aiheet = new ArrayList<>();
+
+        while (result.next()) {
+            int id = result.getInt("id");
+            String teksti = result.getString("teksti");
+            int alue_id = result.getInt("alue_id");
+
+            Aihe aihe = new Aihe(id, teksti, alue_id);
+            aiheet.add(aihe);
+        }
+
+        conn.close();
+
+        return aiheet;
+
     }
 
-    public void tallenna(String teksti, Integer alueId) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void tallenna(String teksti, String alueId) throws SQLException {
+        Connection conn = database.getConnection();
+        Statement stmt = conn.createStatement();
+        stmt.execute("INSERT INTO Aihe (teksti, alue_id) "
+                + "VALUES ('" + teksti + "', '" + Integer.parseInt(alueId) + "')");
 
-}
-    
+        conn.close();
+    }
+
+    public int getId(String id) throws SQLException {
+        Connection conn = database.getConnection();
+        Statement stmt = conn.createStatement();
+
+        ResultSet result = stmt.executeQuery("SELECT * FROM Todo WHERE id = " + id);
+
+        return result.getInt("alue_id");
+    }
+
 }

@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,12 +20,12 @@ public class ViestiDao implements foorumi.database.Dao<Viesti, Integer> {
         this.database = database;
     }
     
-    public void tallenna(String teksti, String lahettaja, Integer alue_id, Date aika) throws SQLException {
+    public void tallenna(String teksti, String lahettaja, String alue_id, Timestamp aika) throws SQLException {
         
         Connection connection = this.database.getConnection();
         Statement stmt = connection.createStatement();
         stmt.execute("INSERT INTO Viesti (teksti, lahettaja, aihe_id, aika) "
-                + "VALUES ('" + teksti + "', '" + lahettaja + "', '" + alue_id + "', '" + aika + "')");
+                + "VALUES ('" + teksti + "', '" + lahettaja + "', '" + Integer.parseInt(alue_id) + "', '" + aika.toString() + "')");
         stmt.close();
         connection.close();
         
@@ -46,7 +47,7 @@ public class ViestiDao implements foorumi.database.Dao<Viesti, Integer> {
         }
             Integer id = rs.getInt("id");
             String teksti = rs.getString("teksti");
-            Date aika = rs.getDate("aika");
+            Timestamp aika = rs.getTimestamp("aika");
             String lahettaja = rs.getString("lahettaja");
             Integer aihe_id = rs.getInt("aihe_id");
 
@@ -64,7 +65,7 @@ public class ViestiDao implements foorumi.database.Dao<Viesti, Integer> {
         while (rs.next()) {
             Integer id = rs.getInt("id");
             String teksti = rs.getString("teksti");
-            Date aika = rs.getDate("aika");
+            Timestamp aika = rs.getTimestamp("aika");
             String lahettaja = rs.getString("lahettaja");
             Integer aihe_id = rs.getInt("aihe_id");
 
