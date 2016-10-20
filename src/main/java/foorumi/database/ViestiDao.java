@@ -79,4 +79,28 @@ public class ViestiDao implements foorumi.database.Dao<Viesti, Integer> {
         return viestit;
     }
     
+    public List<Viesti> etsiKymmenenUusinta() throws SQLException {
+        Connection connection = database.getConnection();
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Viesti ORDER BY aika DESC LIMIT 10;");
+        
+        ResultSet rs = stmt.executeQuery();
+        List<Viesti> viestit = new ArrayList<>();
+        
+        while (rs.next()) {
+            Integer id = rs.getInt("id");
+            String teksti = rs.getString("teksti");
+            Timestamp aika = rs.getTimestamp("aika");
+            String lahettaja = rs.getString("lahettaja");
+            Integer aihe_id = rs.getInt("aihe_id");
+
+            viestit.add(new Viesti(id, teksti, lahettaja, aihe_id, aika));
+        }
+
+        rs.close();
+        stmt.close();
+        connection.close();
+
+        return viestit;
+    }
+    
 }
