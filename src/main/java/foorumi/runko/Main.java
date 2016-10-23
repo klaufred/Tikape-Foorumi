@@ -4,11 +4,12 @@ import foorumi.database.AiheDao;
 import foorumi.database.AlueDao;
 import java.util.HashMap;
 import spark.ModelAndView;
-import static spark.Spark.*;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 import foorumi.database.Database;
 import foorumi.database.ViestiDao;
-import spark.Spark;
+import static spark.Spark.get;
+import static spark.Spark.port;
+import static spark.Spark.post;
 
 public class Main {
 
@@ -16,72 +17,70 @@ public class Main {
         port(getHerokuAssignedPort());
 
         Database database = new Database("foorumi.db");
-        // Database ... 
         
         AlueDao alueDao = new AlueDao(database);
         AiheDao aiheDao = new AiheDao(database);
         ViestiDao viestiDao = new ViestiDao(database);
         
-        Spark.get("/", (req, res) -> {
-            res.redirect("/aihe");
-            return "ok";
-        });
-        
-        Spark.get("/tehtavat/poista/:id", (req, res) -> {
-            int aihe = aiheDao.getId(":id");
-            aiheDao.poista(req.params(":id"));
-            res.redirect("/aihe/" + req.params());
-            return "ok";
-        });
-
-        Spark.get("/tehtavat", (req, res) -> {
-            HashMap data = new HashMap<>();
-            data.put("tehtavat", todoDao.haeTodot());
-
-            return new ModelAndView(data, "index");
+        get("/", (req, res) -> {
+            HashMap map = new HashMap<>();
+            map.put("alueet", alueDao.etsiKaikki()); 
+            return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
 
-        Spark.post("/tehtavat", (req, res) -> {
-            todoDao.lisaa(req.queryParams("tehtava"));
+        post("/", (req, res) -> {
+            String alueNimi = req.queryParams("alue");
+            alueNimi = alueNimi.trim();
+            if (alueNimi.length() > 0 && alueNimi.length() < 40) {
+                alueDao.tallenna(alueNimi);
+            }
             res.redirect("/");
             return "ok";
         });
         
-        Spark.get("/tekijat", (req, res) -> {
-            HashMap data = new HashMap<>();
-            data.put("tekijat", tekijaDao.haeTekijat());
-
-            return new ModelAndView(data, "tekijat");
+        get("/alue/:alue_id", (req, res) -> {
+            HashMap map = new HashMap<>();
+            map.put("aiheet", aiheDao.etsiKaikki());
+            map.put("alue", alueDao.etsiYksi(Integer.parseInt(req.params(":alue_id"))));
+            return new ModelAndView(map, "aiheet");
         }, new ThymeleafTemplateEngine());
-        
-        Spark.get("/aihe/:id", (req, res) -> {
-            HashMap data = new HashMap<>();
-            data.put("tehtavat", todoDao.haeTodot(Integer.parseInt(req.params(":id"))));
 
-            return new ModelAndView(data, "index");
-        }, new ThymeleafTemplateEngine());
-        
-        Spark.post("/tekijat", (req, res) -> {
-            tekijaDao.luoTekija(req.queryParams("nimi"));
-            res.redirect("/");
-            return "ok";
-        });
-
-        Spark.post("/tekijat/:id", (req, res) -> {
-            todoDao.lisaa(req.params(":id"), 
-                    req.queryParams("tehtava"));
-
-            res.redirect("/tekijat/" + req.params(":id"));
+        post("/alue/:alue_id", (req, res) -> {
+            String aihe = req.queryParams("aihe");
+            aihe = aihe.trim();
+            if (aihe.length() > 0 || aihe.length() < 40) {
+                aiheDao.tallenna(aihe, req.queryParams("alue_id"));
+                return "ok";
+            }
+            res.redirect("/alue");
             return "ok";
         });
         
+        get("/alue/:alue_id/aihe/:aihe_id", (req, res) -> { 
+            HashMap map = new HashMap<>();
+            map.put("viestit", viestiDao.etsiKymmenenUusinta());
+            map.put("aihe", aiheDao.etsiYksi(Integer.parseInt(req.params(":aihe_id"))));
+            map.put("alue", alueDao.etsiYksi(Integer.parseInt(req.params(":alue_id"))));
+            
+            return new ModelAndView(map, "viestit");
+        }, new ThymeleafTemplateEngine());
+        
+        post("/alue/:alueid/aihe/:aihe_id", (req, res) -> {
+            String lahettaja = req.queryParams("lähettäjä");
+            String teksti = req.queryParams("teksti");
+            if (lahettaja.trim().length() > 0 && teksti.trim().length() > 0) {
+                viestiDao.tallenna(req.queryParams("teksti"), req.queryParams("lahettaja"),req.params(":aihe_id"));
+            }
+            res.redirect("/alue/" + req.params(":alue_id") + "/aihe/" + Integer.parseInt(req.params(":aihe_id")));
+            return "ok";
+        });
     }
-
+    
     static int getHerokuAssignedPort() {
         ProcessBuilder processBuilder = new ProcessBuilder();
         if (processBuilder.environment().get("PORT") != null) {
             return Integer.parseInt(processBuilder.environment().get("PORT"));
         }
         return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
-    }
+}
 }

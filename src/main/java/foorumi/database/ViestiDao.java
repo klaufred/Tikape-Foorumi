@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,12 +21,12 @@ public class ViestiDao implements foorumi.database.Dao<Viesti, Integer> {
         this.database = database;
     }
     
-    public void tallenna(String teksti, String lahettaja, String alue_id, Timestamp aika) throws SQLException {
+    public void tallenna(String teksti, String lahettaja, String alue_id) throws SQLException {
         
         Connection connection = this.database.getConnection();
         Statement stmt = connection.createStatement();
-        stmt.execute("INSERT INTO Viesti (teksti, lahettaja, aihe_id, aika) "
-                + "VALUES ('" + teksti + "', '" + lahettaja + "', '" + Integer.parseInt(alue_id) + "', '" + aika.toString() + "')");
+        stmt.execute("INSERT INTO Viesti (teksti, lahettaja, aihe_id) "
+                + "VALUES ('" + teksti + "', '" + lahettaja + "', '" + Integer.parseInt(alue_id) + "', '" + Timestamp.valueOf(LocalDateTime.MIN) + "')");
         stmt.close();
         connection.close();
         

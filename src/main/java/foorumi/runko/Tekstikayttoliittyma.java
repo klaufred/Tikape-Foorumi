@@ -88,7 +88,7 @@ public class Tekstikayttoliittyma {
                 System.out.println("Kokeillaan tallentamista:");
                 System.out.println("Anna viesti");
                 String viesti = scanner.nextLine();
-                viestidao.tallenna(viesti, "Lähettäjä","1",Timestamp.valueOf(LocalDateTime.MIN));
+                viestidao.tallenna(viesti, "Lähettäjä","1");
                 System.out.println("Onnistui");
                 } catch (SQLException ex) {
                     System.out.println("Epäonnistui");
