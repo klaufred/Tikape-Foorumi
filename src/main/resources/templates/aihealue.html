@@ -1,0 +1,38 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>Aihealue</title>
+        <meta charset="utf-8" />
+
+    </head>
+
+    <body>
+        <h1>Aihealue</h1>
+
+        <p>Olet saapunut aihealueen: <span th:text="${}"> </span> sivulle.</p>
+        
+        <table style="width:60%">
+            <tr>
+                <td>Viestiketjut</td>
+                <td>Viestejä</td>
+                <td>Viimeisin viesti</td>      
+            </tr>
+            <tr th:each="ketju: ${}">
+                <td><a th:href="${}"><span th:text="${}">Viestiketju</span></a></td>
+                <td><span th:text="${}">viestienLkm</span></td>
+                <td><span th:text="${}">viimeisinViesti</span></td>
+               
+            </tr>
+        </table>
+        <br/>
+        
+        <form method="POST" action= "" th:attr="action= ${}" >
+            Aloita uusi viestiketju:<br/>
+            <input type="teksti" name=""/><br/>
+            <input type="submit" value="Lähetä aloitusviesti"/>
+        </form>
+        
+        <a th:href="">takaisin aihealueisiin</a>
+    </body>
+</html>

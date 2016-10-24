@@ -1,0 +1,32 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>Viestiketju</title>
+        <meta charset="utf-8" />
+    </head>
+
+    <body>
+        <h1>Ketjun <span th:text=""> </span> viestit</h1>
+
+        <ol>
+           
+            <li th:each="viesti: ${}">
+                <span th:text="${}">Viesti</span> <br/> - <span th:text="${}">Lähettäjä</span>  
+                <span th:text="${}">Aika</span>
+            </li>
+        </ol>
+
+        
+        <form method="POST" action= "" th:attr="action= ${}" >
+            Viesti:<br/>
+            <textarea cols="30" rows="5" name=""></textarea>
+            <br/>
+            Lähettäjä: <br/>
+            <input type="text" name=""/><br/>
+            <input type="submit" value="Laheta viesti"/>
+        </form>
+        <a>Takaisin viestiketjuihin</a>
+        <a>Takaisin aihealueisiin</a>
+    </body>
+</html>

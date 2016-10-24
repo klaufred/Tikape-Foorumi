@@ -16,7 +16,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         port(getHerokuAssignedPort());
 
-        Database database = new Database("foorumi.db");
+        Database database = new Database("jdbc:sqlite:foorumi.db");
         
         AlueDao alueDao = new AlueDao(database);
         AiheDao aiheDao = new AiheDao(database);
