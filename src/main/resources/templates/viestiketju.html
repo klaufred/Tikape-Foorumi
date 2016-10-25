@@ -11,14 +11,14 @@
 
         <ol>
            
-            <li th:each="viesti: ${}">
+            <li th:each="viesti: ${viestit}">
                 <span th:text="${}">Viesti</span> <br/> - <span th:text="${}">Lähettäjä</span>  
                 <span th:text="${}">Aika</span>
             </li>
         </ol>
 
         
-        <form method="POST" action= "" th:attr="action= ${}" >
+        <form method="POST" action= "/alue/:alue_id/aihe/:aihe_id" >
             Viesti:<br/>
             <textarea cols="30" rows="5" name=""></textarea>
             <br/>
@@ -26,7 +26,5 @@
             <input type="text" name=""/><br/>
             <input type="submit" value="Laheta viesti"/>
         </form>
-        <a>Takaisin viestiketjuihin</a>
-        <a>Takaisin aihealueisiin</a>
     </body>
 </html>

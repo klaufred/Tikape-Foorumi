@@ -21,12 +21,12 @@ public class ViestiDao implements foorumi.database.Dao<Viesti, Integer> {
         this.database = database;
     }
     
-    public void tallenna(String teksti, String lahettaja, String alue_id) throws SQLException {
+    public void tallenna(String teksti, String lahettaja, String aihe) throws SQLException {
         
         Connection connection = this.database.getConnection();
         Statement stmt = connection.createStatement();
-        stmt.execute("INSERT INTO Viesti (teksti, lahettaja, aihe_id) "
-                + "VALUES ('" + teksti + "', '" + lahettaja + "', '" + Integer.parseInt(alue_id) + "', '" + Timestamp.valueOf(LocalDateTime.MIN) + "')");
+        stmt.execute("INSERT INTO Viesti (aihe, teksti, lähettäjä, aika) "
+                + "VALUES ('" + Integer.parseInt(aihe) + "', '" + teksti + "', '" + lahettaja + "', '" + Timestamp.valueOf(LocalDateTime.MIN) + "')");
         stmt.close();
         connection.close();
         
@@ -46,11 +46,11 @@ public class ViestiDao implements foorumi.database.Dao<Viesti, Integer> {
             stmt.close();
             return null;
         }
-            Integer id = rs.getInt("id");
+            Integer id = rs.getInt("viesti_id");
             String teksti = rs.getString("teksti");
             Timestamp aika = rs.getTimestamp("aika");
-            String lahettaja = rs.getString("lahettaja");
-            Integer aihe_id = rs.getInt("aihe_id");
+            String lahettaja = rs.getString("lähettäjä");
+            Integer aihe_id = rs.getInt("aihe");
 
             return new Viesti(id, teksti, lahettaja, aihe_id, aika);
     }
@@ -64,11 +64,11 @@ public class ViestiDao implements foorumi.database.Dao<Viesti, Integer> {
         List<Viesti> viestit = new ArrayList<>();
         
         while (rs.next()) {
-            Integer id = rs.getInt("id");
+            Integer id = rs.getInt("viesti_id");
             String teksti = rs.getString("teksti");
             Timestamp aika = rs.getTimestamp("aika");
-            String lahettaja = rs.getString("lahettaja");
-            Integer aihe_id = rs.getInt("aihe_id");
+            String lahettaja = rs.getString("lähettäjä");
+            Integer aihe_id = rs.getInt("aihe");
 
             viestit.add(new Viesti(id, teksti, lahettaja, aihe_id, aika));
         }
@@ -88,11 +88,11 @@ public class ViestiDao implements foorumi.database.Dao<Viesti, Integer> {
         List<Viesti> viestit = new ArrayList<>();
         
         while (rs.next()) {
-            Integer id = rs.getInt("id");
+            Integer id = rs.getInt("viesi_id");
             String teksti = rs.getString("teksti");
             Timestamp aika = rs.getTimestamp("aika");
-            String lahettaja = rs.getString("lahettaja");
-            Integer aihe_id = rs.getInt("aihe_id");
+            String lahettaja = rs.getString("lähettäjä");
+            Integer aihe_id = rs.getInt("aihe");
 
             viestit.add(new Viesti(id, teksti, lahettaja, aihe_id, aika));
         }

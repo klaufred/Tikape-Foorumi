@@ -52,7 +52,7 @@ public class AlueDao implements Dao<Alue, Integer>{
         ResultSet rs = stmt.executeQuery();
         List<Alue> alueet = new ArrayList<>();
         while (rs.next()) {
-            Integer id = rs.getInt("id");
+            Integer id = rs.getInt("alue_id");
             String nimi = rs.getString("nimi");
 
             alueet.add(new Alue(id, nimi));

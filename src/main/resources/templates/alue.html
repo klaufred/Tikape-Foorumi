@@ -8,9 +8,9 @@
     </head>
 
     <body>
-        <h1>Aihealue</h1>
+        <h1>Alue</h1>
 
-        <p>Olet saapunut aihealueen: <span th:text="${}"> </span> sivulle.</p>
+        <p>Olet saapunut alueseen: <span th:text="${alue}"> </span> sivulle.</p>
         
         <table style="width:60%">
             <tr>
@@ -18,7 +18,7 @@
                 <td>Viestejä</td>
                 <td>Viimeisin viesti</td>      
             </tr>
-            <tr th:each="ketju: ${}">
+            <tr th:each="ketju: ${aiheet}">
                 <td><a th:href="${}"><span th:text="${}">Viestiketju</span></a></td>
                 <td><span th:text="${}">viestienLkm</span></td>
                 <td><span th:text="${}">viimeisinViesti</span></td>
@@ -27,12 +27,10 @@
         </table>
         <br/>
         
-        <form method="POST" action= "" th:attr="action= ${}" >
+        <form method="POST" action= "/alue/:alue_id" >
             Aloita uusi viestiketju:<br/>
             <input type="teksti" name=""/><br/>
             <input type="submit" value="Lähetä aloitusviesti"/>
         </form>
-        
-        <a th:href="">takaisin aihealueisiin</a>
     </body>
 </html>

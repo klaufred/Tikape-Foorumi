@@ -38,16 +38,14 @@ public class Main {
             return "ok";
         });
         
-        get("/alue/:alue_id", (req, res) -> {
+        get("/alue/", (req, res) -> {
             HashMap map = new HashMap<>();
             map.put("aiheet", aiheDao.etsiKaikki());
-            map.put("alue", alueDao.etsiYksi(Integer.parseInt(req.params(":alue_id"))));
-            return new ModelAndView(map, "aiheet");
+            return new ModelAndView(map, "alue");
         }, new ThymeleafTemplateEngine());
 
         post("/alue/:alue_id", (req, res) -> {
             String aihe = req.queryParams("aihe");
-            aihe = aihe.trim();
             if (aihe.length() > 0 || aihe.length() < 40) {
                 aiheDao.tallenna(aihe, req.queryParams("alue_id"));
                 return "ok";
@@ -59,8 +57,6 @@ public class Main {
         get("/alue/:alue_id/aihe/:aihe_id", (req, res) -> { 
             HashMap map = new HashMap<>();
             map.put("viestit", viestiDao.etsiKymmenenUusinta());
-            map.put("aihe", aiheDao.etsiYksi(Integer.parseInt(req.params(":aihe_id"))));
-            map.put("alue", alueDao.etsiYksi(Integer.parseInt(req.params(":alue_id"))));
             
             return new ModelAndView(map, "viestit");
         }, new ThymeleafTemplateEngine());
