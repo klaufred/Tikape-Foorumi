@@ -24,7 +24,7 @@ public class Main {
         
         get("/", (req, res) -> {
             HashMap map = new HashMap<>();
-            map.put("alueet", alueDao.etsiKaikki()); 
+            map.put("alueet", alueDao.etsiKaikki(1)); // 1 vain koska Dao vaatii että sillä on integer 
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
 
@@ -38,36 +38,35 @@ public class Main {
             return "ok";
         });
         
-        get("/alue/", (req, res) -> {
+        get("/alue/:alueId", (req, res) -> {
             HashMap map = new HashMap<>();
-            map.put("aiheet", aiheDao.etsiKaikki());
+            map.put("aiheet", aiheDao.etsiKaikki(Integer.parseInt(req.params(":alueId"))));
             return new ModelAndView(map, "alue");
         }, new ThymeleafTemplateEngine());
 
-        post("/alue/:alue_id", (req, res) -> {
+        post("/alue/:alueId", (req, res) -> {
             String aihe = req.queryParams("aihe");
-            if (aihe.length() > 0 || aihe.length() < 40) {
-                aiheDao.tallenna(aihe, req.queryParams("alue_id"));
-                return "ok";
+            if (aihe.length() > 0 && aihe.length() < 40) {
+                aiheDao.tallenna(aihe, req.queryParams(":alueId"));
             }
-            res.redirect("/alue");
+            res.redirect("/alue/" + req.params(":alueId"));
             return "ok";
         });
         
-        get("/alue/:alue_id/aihe/:aihe_id", (req, res) -> { 
+        get("/alue/:alueId/aihe/:aiheId", (req, res) -> { 
             HashMap map = new HashMap<>();
-            map.put("viestit", viestiDao.etsiKymmenenUusinta());
+            map.put("viestit", viestiDao.etsiKymmenenUusinta(Integer.parseInt(req.params(":aiheId"))));
             
             return new ModelAndView(map, "viestit");
         }, new ThymeleafTemplateEngine());
         
-        post("/alue/:alueid/aihe/:aihe_id", (req, res) -> {
+        post("/alue/:alueid/aihe/:aiheid", (req, res) -> {
             String lahettaja = req.queryParams("lähettäjä");
             String teksti = req.queryParams("teksti");
             if (lahettaja.trim().length() > 0 && teksti.trim().length() > 0) {
-                viestiDao.tallenna(req.queryParams("teksti"), req.queryParams("lahettaja"),req.params(":aihe_id"));
+                viestiDao.tallenna(req.queryParams("teksti"), req.queryParams("lahettaja"),req.params(":aihe"));
             }
-            res.redirect("/alue/" + req.params(":alue_id") + "/aihe/" + Integer.parseInt(req.params(":aihe_id")));
+            res.redirect("/alue/" + req.params(":alue") + "/aihe/" + Integer.parseInt(req.params(":aihe")));
             return "ok";
         });
     }

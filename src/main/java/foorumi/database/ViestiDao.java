@@ -56,9 +56,9 @@ public class ViestiDao implements foorumi.database.Dao<Viesti, Integer> {
     }
 
     @Override
-    public List<Viesti> etsiKaikki() throws SQLException {
+    public List<Viesti> etsiKaikki(Integer aihe) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Viesti");
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Viesti WHERE aihe = " + aihe);
         
         ResultSet rs = stmt.executeQuery();
         List<Viesti> viestit = new ArrayList<>();
@@ -80,9 +80,9 @@ public class ViestiDao implements foorumi.database.Dao<Viesti, Integer> {
         return viestit;
     }
     
-    public List<Viesti> etsiKymmenenUusinta() throws SQLException {
+    public List<Viesti> etsiKymmenenUusinta(Integer aihe) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Viesti ORDER BY aika DESC LIMIT 10;");
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Viesti WHERE aihe = " + aihe + " ORDER BY aika DESC LIMIT 10;");
         
         ResultSet rs = stmt.executeQuery();
         List<Viesti> viestit = new ArrayList<>();

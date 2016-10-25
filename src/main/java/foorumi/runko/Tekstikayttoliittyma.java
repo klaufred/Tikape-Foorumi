@@ -40,7 +40,7 @@ public class Tekstikayttoliittyma {
         if (kysymys.equals("Alue")) {
             try {
                 System.out.println("Haetaan ensin kaikki");
-                List<Alue> lista = aluedao.etsiKaikki();
+                List<Alue> lista = aluedao.etsiKaikki(1);
                 for (Alue a : lista) {
                     System.out.println(a.getNimi());
                 }}  catch (SQLException ex) {
@@ -77,7 +77,7 @@ public class Tekstikayttoliittyma {
         if (kysymys.equals("Viesti")) {
             try {
                 System.out.println("Haetaan ensin kaikki");
-                List<Viesti> lista = viestidao.etsiKaikki();
+                List<Viesti> lista = viestidao.etsiKaikki(1);
                 for (Viesti a : lista) {
                     System.out.println(a.getTeksti());
                 }}  catch (SQLException ex) {
@@ -112,7 +112,7 @@ public class Tekstikayttoliittyma {
         if (kysymys.equals("Aihe")) {
             try {
                 System.out.println("Haetaan ensin kaikki");
-                List<Aihe> lista = aihedao.etsiKaikki();
+                List<Aihe> lista = aihedao.etsiKaikki(1);
                 for (Aihe a : lista) {
                     System.out.println(a.getId());
                 }}  catch (SQLException ex) {

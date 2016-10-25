@@ -10,7 +10,6 @@
     <body>
         <h1>Alue</h1>
 
-        <p>Olet saapunut alueseen: <span th:text="${alue}"> </span> sivulle.</p>
         
         <table style="width:60%">
             <tr>
@@ -18,19 +17,20 @@
                 <td>Viestejä</td>
                 <td>Viimeisin viesti</td>      
             </tr>
-            <tr th:each="ketju: ${aiheet}">
-                <td><a th:href="${}"><span th:text="${}">Viestiketju</span></a></td>
-                <td><span th:text="${}">viestienLkm</span></td>
-                <td><span th:text="${}">viimeisinViesti</span></td>
-               
+            <tr th:each="aihe: ${aiheet}">
+                <td><a th:href="@{~/aihe/{id}(id=${aihe.id})}"><span th:text="${aihe.teksti}">Viestiketjut</span></a></td>
+                <td th:text="${aihe.viestit}"> > Viestejä yhteensä</td>
+                <td th:text="${aihe.viimeisinViesti}"> > Viimeisin viesti</td>
             </tr>
         </table>
         <br/>
         
-        <form method="POST" action= "/alue/:alue_id" >
+        <form method="POST" >
             Aloita uusi viestiketju:<br/>
-            <input type="teksti" name=""/><br/>
+            <input type="text" name="aihe"/><br/>
             <input type="submit" value="Lähetä aloitusviesti"/>
         </form>
+        
+        <span> <a th:href="@{~/}" th:text="Etusivu">Etusivu</a> </span>
     </body>
 </html>

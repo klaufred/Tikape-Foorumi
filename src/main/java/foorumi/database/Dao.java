@@ -8,6 +8,6 @@ import java.util.List;
 
     T etsiYksi(K key) throws SQLException;
 
-    List<T> etsiKaikki() throws SQLException;
+    List<T> etsiKaikki(Integer k) throws SQLException;
 }
 

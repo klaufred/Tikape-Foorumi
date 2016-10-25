@@ -45,7 +45,7 @@ public class AlueDao implements Dao<Alue, Integer>{
     }
 
     @Override
-    public List<Alue> etsiKaikki() throws SQLException {
+    public List<Alue> etsiKaikki(Integer i) throws SQLException {
         Connection connection = database.getConnection();
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Alue");
 

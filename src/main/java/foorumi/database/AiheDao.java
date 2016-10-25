@@ -20,7 +20,7 @@ public class AiheDao implements Dao<Aihe, Integer> {
     @Override
     public Aihe etsiYksi(Integer key) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Aihe WHERE id = ?");
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Aihe WHERE aihe_id = ?");
         stmt.setObject(1, key);
 
         ResultSet rs = stmt.executeQuery();
@@ -44,11 +44,10 @@ public class AiheDao implements Dao<Aihe, Integer> {
         return aihe;
     }
 
-    @Override
-    public List<Aihe> etsiKaikki() throws SQLException {
+    public List<Aihe> etsiKaikki(Integer alue) throws SQLException {
         Connection conn = database.getConnection();
         Statement stmt = conn.createStatement();
-        ResultSet result = stmt.executeQuery("SELECT * FROM Aihe");
+        ResultSet result = stmt.executeQuery("SELECT * FROM Aihe WHERE alue = " + alue);
 
         List<Aihe> aiheet = new ArrayList<>();
 
