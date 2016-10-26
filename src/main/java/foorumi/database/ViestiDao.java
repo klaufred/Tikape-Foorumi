@@ -36,7 +36,7 @@ public class ViestiDao implements foorumi.database.Dao<Viesti, Integer> {
     @Override
     public Viesti etsiYksi(Integer key) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Viesti WHERE id = ?");
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Viesti WHERE viesti_id = ?");
         stmt.setObject(1, key);
         
         ResultSet rs = stmt.executeQuery();
@@ -88,7 +88,7 @@ public class ViestiDao implements foorumi.database.Dao<Viesti, Integer> {
         List<Viesti> viestit = new ArrayList<>();
         
         while (rs.next()) {
-            Integer id = rs.getInt("viesi_id");
+            Integer id = rs.getInt("viesti_id");
             String teksti = rs.getString("teksti");
             Timestamp aika = rs.getTimestamp("aika");
             String lahettaja = rs.getString("lähettäjä");

@@ -21,7 +21,7 @@ public class AlueDao implements Dao<Alue, Integer>{
     @Override
     public Alue etsiYksi(Integer key) throws SQLException {
         Connection connection = database.getConnection();
-        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Alue WHERE id = ?");
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Alue WHERE alue_id = ?");
         stmt.setObject(1, key);
 
         ResultSet rs = stmt.executeQuery();
@@ -32,7 +32,7 @@ public class AlueDao implements Dao<Alue, Integer>{
             return null;
         }
 
-        Integer id = rs.getInt("id");
+        Integer id = rs.getInt("alue_id");
         String nimi = rs.getString("nimi");
 
         Alue alue = new Alue(id, nimi);
