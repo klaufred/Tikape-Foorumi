@@ -14,6 +14,7 @@
             <li th:each="viesti: ${viestit}">
                 <span th:text="${viesti.teksti}">Viesti</span> <br/> - <span th:text="${viesti.lahettaja}">Lähettäjä</span>  
                 <br th:text="${viesti.aika}">Aika</br>
+                <br></br>
             </li>
         </ol>
 
@@ -26,7 +27,7 @@
             <input type="text" name="lähettäjä"/><br/>
             <input type="submit" value="Laheta viesti"/>
         </form>
-        
+        <br></br>
         <span> <a th:href="@{~/}" th:text="Etusivu">Etusivu</a> </span>
     </body>
 </html>
