@@ -22,8 +22,10 @@ public class ViestiDao implements foorumi.database.Dao<Viesti, Integer> {
         
         Connection connection = this.database.getConnection();
         Statement stmt = connection.createStatement();
+        String aika = new java.sql.Timestamp(new java.util.Date().getTime()).toString();
+        aika = aika.substring(0, 19);
         stmt.execute("INSERT INTO Viesti (aihe, teksti, lähettäjä, aika) "
-                + "VALUES ('" + Integer.parseInt(aihe) + "', '" + teksti + "', '" + lahettaja + "', '" + new java.sql.Timestamp(new java.util.Date().getTime()) + "')");
+                + "VALUES ('" + Integer.parseInt(aihe) + "', '" + teksti + "', '" + lahettaja + "', '" + aika + "')");
         stmt.close();
         connection.close(); 
     }
@@ -32,8 +34,10 @@ public class ViestiDao implements foorumi.database.Dao<Viesti, Integer> {
         
         Connection connection = this.database.getConnection();
         Statement stmt = connection.createStatement();
+        String aika = new java.sql.Timestamp(new java.util.Date().getTime()).toString();
+        aika = aika.substring(0, 19);
         stmt.execute("INSERT INTO Viesti (aihe, teksti, lähettäjä, aika) "
-                + "VALUES ('" + aihe + "', '" + teksti + "', '" + lahettaja + "', '" + new java.sql.Timestamp(new java.util.Date().getTime()) + "')");
+                + "VALUES ('" + aihe + "', '" + teksti + "', '" + lahettaja + "', '" + aika + "')");
         stmt.close();
         connection.close(); 
     }
