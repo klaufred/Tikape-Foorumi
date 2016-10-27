@@ -18,8 +18,15 @@ public class Main {
         if (System.getenv("PORT") != null) {
             port(Integer.valueOf(System.getenv("PORT")));
         }
+        
+        // käytetään oletuksena paikallista sqlite-tietokantaa
+        String jdbcOsoite = "jdbc:sqlite:foorumi.db";
+        // jos heroku antaa käyttöömme tietokantaosoitteen, otetaan se käyttöön
+        if (System.getenv("DATABASE_URL") != null) {
+            jdbcOsoite = System.getenv("DATABASE_URL");
+        } 
 
-        Database database = new Database("jdbc:sqlite:foorumi.db");
+        Database database = new Database(jdbcOsoite);
         
         AlueDao alueDao = new AlueDao(database);
         AiheDao aiheDao = new AiheDao(database);
@@ -50,8 +57,14 @@ public class Main {
 
         post("/alue/:alueId", (req, res) -> {
             String aihe = req.queryParams("aihe");
+            int aiheId = 0;
             if (aihe.length() > 0 && aihe.length() < 40) {
-                aiheDao.tallenna(aihe, Integer.parseInt(req.params(":alueId")));
+                aiheId = aiheDao.tallenna(aihe, Integer.parseInt(req.params(":alueId")));
+            }
+            String lahettaja = req.queryParams("lähettäjä");
+            String teksti = req.queryParams("teksti");
+            if (lahettaja.trim().length() > 0 && teksti.trim().length() > 0 && aiheId != 0) {
+                viestiDao.tallennaAiheenMukana(req.queryParams("teksti"), req.queryParams("lähettäjä"),aiheId);
             }
             res.redirect("/alue/" + req.params(":alueId"));
             return "ok";

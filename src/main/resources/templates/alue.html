@@ -27,9 +27,13 @@
         <form method="POST">
             Aloita uusi viestiketju:<br/>
             <input type="text" name="aihe"/><br/>
-            <input type="submit" value="Lähetä aloitusviesti"/>
+            Viesti:<br/>
+            <textarea cols="30" rows="5" name="teksti"></textarea>
+            <br/>
+            Lähettäjä: <br/>
+            <input type="text" name="lähettäjä"/><br/>
+            <input type="submit" value="Lähetä viesti"/>
         </form>
-        
         <span> <a th:href="@{~/}" th:text="Etusivu">Etusivu</a> </span>
     </body>
 </html>

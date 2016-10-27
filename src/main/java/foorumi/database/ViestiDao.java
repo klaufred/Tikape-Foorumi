@@ -25,10 +25,18 @@ public class ViestiDao implements foorumi.database.Dao<Viesti, Integer> {
         stmt.execute("INSERT INTO Viesti (aihe, teksti, lähettäjä, aika) "
                 + "VALUES ('" + Integer.parseInt(aihe) + "', '" + teksti + "', '" + lahettaja + "', '" + new java.sql.Timestamp(new java.util.Date().getTime()) + "')");
         stmt.close();
-        connection.close();
+        connection.close(); 
+    }
+    
+    public void tallennaAiheenMukana(String teksti, String lahettaja, Integer aihe) throws SQLException {
         
-        
-}
+        Connection connection = this.database.getConnection();
+        Statement stmt = connection.createStatement();
+        stmt.execute("INSERT INTO Viesti (aihe, teksti, lähettäjä, aika) "
+                + "VALUES ('" + aihe + "', '" + teksti + "', '" + lahettaja + "', '" + new java.sql.Timestamp(new java.util.Date().getTime()) + "')");
+        stmt.close();
+        connection.close(); 
+    }
 
     @Override
     public Viesti etsiYksi(Integer key) throws SQLException {

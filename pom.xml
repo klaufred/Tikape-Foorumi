@@ -10,8 +10,21 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
+    
+    
 
     <dependencies>
+        <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>3.8.11.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.4-1201-jdbc4</version>
+        </dependency>
+
         <dependency>
             <groupId>com.sparkjava</groupId>
             <artifactId>spark-core</artifactId>
@@ -22,11 +35,6 @@
             <artifactId>spark-template-thymeleaf</artifactId>
             <version>2.3</version>
         </dependency>        
-        <dependency>
-            <groupId>org.xerial</groupId>
-            <artifactId>sqlite-jdbc</artifactId>
-            <version>3.8.11.2</version>
-        </dependency>
     </dependencies>
     
     <!-- projektin käynnistäminen Herokussa -->

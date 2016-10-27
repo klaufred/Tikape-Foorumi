@@ -68,14 +68,24 @@ public class AiheDao implements Dao<Aihe, Integer> {
 
     }
 
-    public void tallenna(String teksti, Integer alueId) throws SQLException {
+    public Integer tallenna(String teksti, Integer alueId) throws SQLException {
         Connection conn = database.getConnection();
         Statement stmt = conn.createStatement();
         stmt.execute("INSERT INTO Aihe (alue, teksti) "
                 + "VALUES ('" + alueId + "', '" + teksti  + "')");
+        
+        //Tarvitaan id jotta voidaan lisätä samalle uudelle aiheelle aloitusviesti
+        PreparedStatement stmt1 = conn.prepareStatement("SELECT Aihe.aihe_id FROM Aihe ORDER BY Aihe.aihe_id DESC LIMIT 1");
+        ResultSet rs1 = stmt1.executeQuery();
+
+        Integer aihe_id = null;
+        if (rs1.next()) {
+            aihe_id = rs1.getInt("aihe_id");
+        } 
 
         stmt.close();
         conn.close();
+        return aihe_id;
     }
 
     public int getId(String id) throws SQLException {
