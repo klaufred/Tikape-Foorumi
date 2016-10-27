@@ -17,7 +17,7 @@
             <tr th:each="alue: ${alueet}"> 
                <td><a th:href="@{~/alue/{id}(id=${alue.id})}" th:text="${alue.nimi}">Alue</a></td>  
                <td th:text="${alue.viestit}"> > Viestejä yhteensä</td>
-               <td th:text="${alue.viimeisinViesti}"> > Viimeisin viesti</td>
+               <td th:text="${alue.aika}">aika</td>
             </tr>
         </table>
     <form action="/" method="POST">

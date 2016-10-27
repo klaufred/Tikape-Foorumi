@@ -123,7 +123,7 @@ public class Tekstikayttoliittyma {
                 System.out.println("Kokeillaan tallentamista:");
                 System.out.println("Anna teksti");
                 String teksti = scanner.nextLine();
-                aihedao.tallenna(teksti,"0");
+                aihedao.tallenna(teksti, 0);
                 System.out.println("Onnistui");
                 } catch (SQLException ex) {
                     System.out.println("Epäonnistui");

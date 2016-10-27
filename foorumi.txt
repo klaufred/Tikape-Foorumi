@@ -1,22 +1,9 @@
-CREATE TABLE Alue (
-	id int PRIMARY KEY NOT NULL,
-	nimi varchar(40) NOT NULL,
-);
+CREATE TABLE Viesti (viesti_id integer PRIMARY KEY, aihe integer NOT NULL, teksti varchar(400) NOT NULL, lähettäjä varchar(50) NOT NULL, aika String, FOREIGN KEY(aihe) REFERENCES Aihe(aihe_id));
 
-CREATE TABLE Aihe (
-	id int PRIMARY KEY NOT NULL,
-	alue int NOT NULL,
-	teksti varchar(100) NOT NULL,
-	FOREIGN KEY(alue) REFERENCES Alue(alue_id),
-)
 
-CREATE TABLE VIESTI (
-	int id NOT NULL,
-	aihe int NOT NULL,
-	teksti varchar(100) NOT NULL,
-	lähettäjä varchar(20) NOT NULL,
-	aika Date NOT NULL,
-	FOREIGN KEY(aihe) REFERENCES Aihe(id),
-)
+CREATE TABLE Aihe (aihe_id integer PRIMARY KEY, alue integer NOT NULL, teksti varchar(100) NOT NULL, FOREIGN KEY(alue) REFERENCES Alue(alue_id));
+
+
+CREATE TABLE Alue (alue_id integer PRIMARY KEY, nimi varchar(100) NOT NULL);
 
 

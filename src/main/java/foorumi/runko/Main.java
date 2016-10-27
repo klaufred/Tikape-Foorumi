@@ -24,49 +24,50 @@ public class Main {
         
         get("/", (req, res) -> {
             HashMap map = new HashMap<>();
-            map.put("alueet", alueDao.etsiKaikki(1)); // 1 vain koska Dao vaatii että sillä on integer 
+            map.put("alueet", alueDao.haeAiheetJaViestit());
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
 
         post("/", (req, res) -> {
-            String alueNimi = req.queryParams("alue");
-            alueNimi = alueNimi.trim();
-            if (alueNimi.length() > 0 && alueNimi.length() < 40) {
-                alueDao.tallenna(alueNimi);
+            String alue = req.queryParams("alue");
+            alue = alue.trim();
+            if (alue.length() > 0 && alue.length() < 40) {
+                alueDao.tallenna(alue);
             }
             res.redirect("/");
             return "ok";
         });
         
-        get("/alue/:alue_id", (req, res) -> {
+        get("/alue/:alueId", (req, res) -> {
             HashMap map = new HashMap<>();
-            map.put("aiheet", aiheDao.etsiKaikki(Integer.parseInt(req.params(":alue_id"))));
+            map.put("aiheet", aiheDao.haeAiheet(Integer.parseInt(req.params(":alueId"))));
+            map.put("alue", alueDao.etsiYksi(Integer.parseInt(req.params(":alueId"))));
             return new ModelAndView(map, "alue");
         }, new ThymeleafTemplateEngine());
 
-        post("/alue/:alue_id", (req, res) -> {
+        post("/alue/:alueId", (req, res) -> {
             String aihe = req.queryParams("aihe");
             if (aihe.length() > 0 && aihe.length() < 40) {
-                aiheDao.tallenna(aihe, req.queryParams(":alue_id"));
+                aiheDao.tallenna(aihe, Integer.parseInt(req.params(":alueId")));
             }
-            res.redirect("/alue/" + req.params(":alue_id"));
+            res.redirect("/alue/" + req.params(":alueId"));
             return "ok";
         });
         
-        get("/alue/:alue_id/aihe/:aihe_id", (req, res) -> { 
+        get("/aihe/:aiheId", (req, res) -> { 
             HashMap map = new HashMap<>();
-            map.put("viestit", viestiDao.etsiKymmenenUusinta(Integer.parseInt(req.params(":aihe_id"))));
-            
-            return new ModelAndView(map, "viestit");
+            map.put("viestit", viestiDao.etsiKymmenenUusinta(Integer.parseInt(req.params(":aiheId"))));
+            map.put("aihe", aiheDao.etsiYksi(Integer.parseInt(req.params(":aiheId"))));
+            return new ModelAndView(map, "viestiketju");
         }, new ThymeleafTemplateEngine());
         
-        post("/alue/:alue_id/aihe/:aihe_id", (req, res) -> {
+        post("/aihe/:aiheId", (req, res) -> {
             String lahettaja = req.queryParams("lähettäjä");
             String teksti = req.queryParams("teksti");
             if (lahettaja.trim().length() > 0 && teksti.trim().length() > 0) {
-                viestiDao.tallenna(req.queryParams("teksti"), req.queryParams("lahettaja"),req.params(":aihe"));
+                viestiDao.tallenna(req.queryParams("teksti"), req.queryParams("lähettäjä"),req.params(":aiheId"));
             }
-            res.redirect("/alue/" + req.params(":alue") + "/aihe/" + Integer.parseInt(req.params(":aihe")));
+            res.redirect("/aihe/" + Integer.parseInt(req.params(":aiheId")));
             return "ok";
         });
     }

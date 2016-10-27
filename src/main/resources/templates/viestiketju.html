@@ -7,24 +7,26 @@
     </head>
 
     <body>
-        <h1>Ketjun <span th:text=""> </span> viestit</h1>
-
+        <h1>Viestiketju</h1>
+        <h4 th:text="'Aihe: ' +  ${aihe.teksti}">Aihe</h4>
         <ol>
            
             <li th:each="viesti: ${viestit}">
-                <span th:text="${}">Viesti</span> <br/> - <span th:text="${}">Lähettäjä</span>  
-                <span th:text="${}">Aika</span>
+                <span th:text="${viesti.teksti}">Viesti</span> <br/> - <span th:text="${viesti.lahettaja}">Lähettäjä</span>  
+                <br th:text="${viesti.aika}">Aika</br>
             </li>
         </ol>
 
         
-        <form method="POST" action= "/alue/:alue_id/aihe/:aihe_id" >
+        <form method="POST"  >
             Viesti:<br/>
-            <textarea cols="30" rows="5" name=""></textarea>
+            <textarea cols="30" rows="5" name="teksti"></textarea>
             <br/>
             Lähettäjä: <br/>
-            <input type="text" name=""/><br/>
+            <input type="text" name="lähettäjä"/><br/>
             <input type="submit" value="Laheta viesti"/>
         </form>
+        
+        <span> <a th:href="@{~/}" th:text="Etusivu">Etusivu</a> </span>
     </body>
 </html>

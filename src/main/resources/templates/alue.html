@@ -13,19 +13,18 @@
         
         <table style="width:60%">
             <tr>
-                <td>Viestiketjut</td>
+                <th th:text= "'Alue: ' + ${alue.nimi}">Alue </th>
                 <td>Viestejä</td>
                 <td>Viimeisin viesti</td>      
             </tr>
             <tr th:each="aihe: ${aiheet}">
                 <td><a th:href="@{~/aihe/{id}(id=${aihe.id})}"><span th:text="${aihe.teksti}">Viestiketjut</span></a></td>
                 <td th:text="${aihe.viestit}"> > Viestejä yhteensä</td>
-                <td th:text="${aihe.viimeisinViesti}"> > Viimeisin viesti</td>
+                <td th:text="${aihe.aika}">aika</td>
             </tr>
         </table>
         <br/>
-        
-        <form method="POST" >
+        <form method="POST">
             Aloita uusi viestiketju:<br/>
             <input type="text" name="aihe"/><br/>
             <input type="submit" value="Lähetä aloitusviesti"/>

@@ -8,9 +8,9 @@ public class Viesti {
     private String teksti;
     private String lahettaja;
     private int aihe_id;
-    private Timestamp aika;
+    private String aika;
 
-    public Viesti(int id, String teksti, String lahettaja, int aihe_id, Timestamp aika) {
+    public Viesti(int id, String teksti, String lahettaja, int aihe_id, String aika) {
         this.aihe_id = aihe_id;
         this.id = id;
         this.lahettaja = lahettaja;
@@ -30,7 +30,7 @@ public class Viesti {
         return this.teksti;
     }
 
-    public Timestamp getAika() {
+    public String getAika() {
         return this.aika;
     }
 

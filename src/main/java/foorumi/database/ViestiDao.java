@@ -3,13 +3,10 @@ package foorumi.database;
 
 import foorumi.domain.Viesti;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +23,7 @@ public class ViestiDao implements foorumi.database.Dao<Viesti, Integer> {
         Connection connection = this.database.getConnection();
         Statement stmt = connection.createStatement();
         stmt.execute("INSERT INTO Viesti (aihe, teksti, lähettäjä, aika) "
-                + "VALUES ('" + Integer.parseInt(aihe) + "', '" + teksti + "', '" + lahettaja + "', '" + Timestamp.valueOf(LocalDateTime.MIN) + "')");
+                + "VALUES ('" + Integer.parseInt(aihe) + "', '" + teksti + "', '" + lahettaja + "', '" + new java.sql.Timestamp(new java.util.Date().getTime()) + "')");
         stmt.close();
         connection.close();
         
@@ -48,7 +45,7 @@ public class ViestiDao implements foorumi.database.Dao<Viesti, Integer> {
         }
             Integer id = rs.getInt("viesti_id");
             String teksti = rs.getString("teksti");
-            Timestamp aika = rs.getTimestamp("aika");
+            String aika = rs.getString("aika");
             String lahettaja = rs.getString("lähettäjä");
             Integer aihe_id = rs.getInt("aihe");
 
@@ -66,9 +63,9 @@ public class ViestiDao implements foorumi.database.Dao<Viesti, Integer> {
         while (rs.next()) {
             Integer id = rs.getInt("viesti_id");
             String teksti = rs.getString("teksti");
-            Timestamp aika = rs.getTimestamp("aika");
             String lahettaja = rs.getString("lähettäjä");
             Integer aihe_id = rs.getInt("aihe");
+            String aika = rs.getString("aika");
 
             viestit.add(new Viesti(id, teksti, lahettaja, aihe_id, aika));
         }
@@ -90,7 +87,7 @@ public class ViestiDao implements foorumi.database.Dao<Viesti, Integer> {
         while (rs.next()) {
             Integer id = rs.getInt("viesti_id");
             String teksti = rs.getString("teksti");
-            Timestamp aika = rs.getTimestamp("aika");
+            String aika = rs.getString("aika");
             String lahettaja = rs.getString("lähettäjä");
             Integer aihe_id = rs.getInt("aihe");
 
