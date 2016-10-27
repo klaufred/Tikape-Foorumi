@@ -83,7 +83,7 @@ public class AlueDao implements Dao<Alue, Integer>{
                 + "LEFT JOIN Aihe ON Aihe.alue = Alue.alue_id "
                 + "LEFT JOIN Viesti ON Viesti.aihe = aihe.aihe_id "
                 + "GROUP BY Alue.alue_id "
-                + "ORDER BY viesti.aika DESC"); 
+                + "ORDER BY Alue.nimi ASC"); 
 
         ResultSet rs = stmt.executeQuery();
         
