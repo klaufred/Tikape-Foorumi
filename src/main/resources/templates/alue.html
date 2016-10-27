@@ -20,7 +20,7 @@
             <tr th:each="aihe: ${aiheet}">
                 <td><a th:href="@{~/aihe/{id}(id=${aihe.id})}"><span th:text="${aihe.teksti}">Viestiketjut</span></a></td>
                 <td th:text="${aihe.viestit}"> > Viestejä yhteensä</td>
-                <td th:text="${aihe.aika}">aika</td>
+                <td th:text="${aihe.aika}">aika</td>                
             </tr>
         </table>
         <br/>
@@ -34,6 +34,7 @@
             <input type="text" name="lähettäjä"/><br/>
             <input type="submit" value="Lähetä viesti"/>
         </form>
+        <br></br>
         <span> <a th:href="@{~/}" th:text="Etusivu">Etusivu</a> </span>
     </body>
 </html>
