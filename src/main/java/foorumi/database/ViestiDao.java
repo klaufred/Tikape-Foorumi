@@ -113,4 +113,5 @@ public class ViestiDao implements foorumi.database.Dao<Viesti, Integer> {
         return viestit;
     }
     
+    
 }

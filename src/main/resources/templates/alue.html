@@ -18,13 +18,12 @@
 
     <body>
         <h1>Alue</h1>
-
         
         <table style="width:60%">
             <tr>
-                <th th:text= "'Alue: ' + ${alue.nimi}">Alue </th>
-                <td>Viestejä</td>
-                <td>Viimeisin viesti</td>      
+                <th th:text="'Alue: ' + ${alue.nimi}"></th>
+                <td><font size="4">Viestejä</font></td>
+                <td><font size="4">Viimeisin viesti</font></td>      
             </tr>
             <tr th:each="aihe: ${aiheet}">
                 <td><a th:href="@{~/aihe/{id}(id=${aihe.id})}"><span th:text="${aihe.teksti}">Viestiketjut</span></a></td>
