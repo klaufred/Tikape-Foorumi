@@ -1,7 +1,7 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    
-    
+
+
     <head>
         <style>
             body {
@@ -9,24 +9,28 @@
             }
 
         </style>
-        
+
         <title>Viestiketju</title>
         <meta charset="utf-8" />
     </head>
 
     <body>
         <h1>Viestiketju</h1>
-        <h4 th:text="'Aihe: ' +  ${aihe.teksti}">Aihe</h4>
+        <h3 th:text="'Aihe: ' +  ${aihe.teksti}">Aihe</h3>
         <ol>
-           
+
+
             <li th:each="viesti: ${viestit}">
-                <span th:text="${viesti.teksti}">Viesti</span> <br/> - <span th:text="${viesti.lahettaja}">Lähettäjä</span>  
-                <br th:text="${viesti.aika}">Aika</br>
-                <br></br>
+                <span th:text="${viesti.teksti}">Viesti</span> <br/> 
+                Lähettäjä: <span th:text="${viesti.lahettaja}">Lähettäjä</span> 
+                <br th:text="'Lähetetty: ' + ${viesti.aika}">Aika</br>
+                _______________________________
+                <br/> <br/>
             </li>
         </ol>
 
         
+
         <form method="POST"  >
             Viesti:<br/>
             <textarea cols="30" rows="5" name="teksti"></textarea>

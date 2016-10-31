@@ -1,8 +1,8 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-    
-    
+
+
     <head>
         <style>
             body {
@@ -10,27 +10,30 @@
             }
             
         </style>
-        
+
         <title>Keskustelu foorumi</title>
         <meta charset="utf-8" />
     </head>
     <body>
-        <h1>Tikape-foorumi</h1>
+        <h1>Tikape-Foorumi</h1>
         <table> 
             <tr>
-              <th>Alue</th>
-              <th>Viestejä yhteensä</th>
-              <th>Viimeisin viesti</th>
+                <th><font size="4">Alue</font></th>
+                <th><font size="4">Viestejä yhteensä</font></th>
+                <th><font size="4">Viimeisin viesti</font></th>
+
             </tr>
             <tr th:each="alue: ${alueet}"> 
-               <td><a th:href="@{~/alue/{id}(id=${alue.id})}" th:text="${alue.nimi}">Alue</a></td>  
-               <td th:text="${alue.viestit}"> > Viestejä yhteensä</td>
-               <td th:text="${alue.aika}">aika</td>
+                <td><a th:href="@{~/alue/{id}(id=${alue.id})}" th:text="${alue.nimi}">Alue</a></td>  
+                <td th:text="${alue.viestit}"> > Viestejä yhteensä</td>
+                <td th:text="${alue.aika}">aika</td>
             </tr>
         </table>
-    <form action="/" method="POST">
-      <input type="text" name="alue"/><br/>
-      <input type="submit" value="Uusi alue"/>
-    </form> 
-</body>
+        <br/>
+        <form action="/" method="POST">
+            Uusi alue:<br/>
+            <input type="text" name="alue"/><br/>
+            <input type="submit" value="Luo alue"/>
+        </form> 
+    </body>
 </html>
